@@ -44,12 +44,12 @@ if (process.argv.slice(2).length > 0)
     {
         logger.info("Data from offline Test json files");
 
-        drones = require('./test/drones.json');
-        packages = require('./test/packages.json');
+        drones = require('./testdata/drones.json');
+        packages = require('./testdata/packages.json');
 
         //logger.info(JSON.stringify(drones));
 
-        processPackages();
+        processPackages(drones, packages);
 
     }
     else
@@ -69,7 +69,7 @@ else
         {
             packages = data;
 
-            processPackages();
+            processPackages(drones, packages);
 
         }
         );
@@ -82,7 +82,7 @@ else
 /*
 Start processing on the given drones and packages
  */
-function processPackages()
+function processPackages(drones, packages)
 {
 
     sortPackgesByDeadline(packages);
@@ -200,3 +200,6 @@ function canTheDroneMakeIt(package, drone)
         return false;
     }
 }
+
+module.exports.processPackages = processPackages;
+module.exports.canTheDroneMakeIt = canTheDroneMakeIt;

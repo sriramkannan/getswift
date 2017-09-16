@@ -4,7 +4,7 @@
   "description": "code to optimize delivery of good using drones",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "drone",
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "bunyan": "^1.8.12",
-    "geolib": "^2.0.23"
+    "geolib": "^2.0.23",
+    "mocha": "^3.5.3"
   }
 }
