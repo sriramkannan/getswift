@@ -33,3 +33,7 @@ eg.
   assignments: [{droneId: 1593, packageId: 1029438}, {droneId: 1251, packageId: 1029439}]
   unassignedPackageIds: [109533, 109350, 109353]
 }
+
+## Test
+
+run the test as "npm test". 
