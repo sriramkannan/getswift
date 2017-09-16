@@ -185,7 +185,6 @@ function assignTheDrone(packages, availableDrones)
             output.unassignedPackageIds.push(package.packageId);
         }
 
-        logger.info('------------------------------------------');
     }
 
     logger.info("\n\n\n");
