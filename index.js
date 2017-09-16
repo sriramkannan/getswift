@@ -3,18 +3,20 @@ var geolib = require('geolib');
 var bunyan = require('bunyan');
 
 var logger = bunyan.createLogger(
-	{
-		name: 'getswift', streams: [
-	        {
-	            stream: process.stderr,
-	            level: "error"
-	        },
-	        {
-	            path: 'getswift.log',
-	            level: "info"
-	        }
-    	]
-	});
+    {
+        name : 'getswift',
+        streams : [
+            {
+                stream : process.stderr,
+                level : "error"
+            },
+            {
+                path : 'getswift.log',
+                level : "info"
+            }
+        ]
+    }
+    );
 
 var drones = null;
 var packages = null;
@@ -130,13 +132,13 @@ function sortFreeDronesByDistance(availableDrones)
     {
         return (
             (a.packages.length > 0 ?
-            (geolib.getDistance(a.location, a.packages[0].destination) + geolib.getDistance(a.packages[0].destination, depoCoordinate))
-             :
-            geolib.getDistance(a.location, depoCoordinate))
-         - (b.packages.length > 0 ?
-            (geolib.getDistance(b.location, b.packages[0].destination) + geolib.getDistance(b.packages[0].destination, depoCoordinate))
-             :
-            geolib.getDistance(b.location, depoCoordinate)) );
+                (geolib.getDistance(a.location, a.packages[0].destination) + geolib.getDistance(a.packages[0].destination, depoCoordinate))
+                 :
+                geolib.getDistance(a.location, depoCoordinate))
+             - (b.packages.length > 0 ?
+                (geolib.getDistance(b.location, b.packages[0].destination) + geolib.getDistance(b.packages[0].destination, depoCoordinate))
+                 :
+                geolib.getDistance(b.location, depoCoordinate)));
     }
     );
 }
@@ -164,7 +166,7 @@ function assignTheDrone(packages, availableDrones)
                 // remove the drone from the availableDrones
                 availableDrones.shift();
 
-                logger.info('\x1b[32m%s\x1b[0m', package.packageId + " assigned to " + drone.droneId);
+                logger.info(package.packageId + " assigned to " + drone.droneId);
                 output.assignments.push(
                 {
                     "droneId" : drone.droneId,
@@ -197,16 +199,16 @@ function assignTheDrone(packages, availableDrones)
 Checks to see if a package can be assigned to a drone
  */
 function canTheDroneMakeIt(package, drone)
-{	
-	var droneDistanceBackToDepo =  (drone.packages.length > 0 ? geolib.getDistance(drone.location, drone.packages[0].destination) + geolib.getDistance(drone.packages[0].destination, depoCoordinate) : geolib.getDistance(depoCoordinate, drone.location));
+{
+    var droneDistanceBackToDepo = (drone.packages.length > 0 ? geolib.getDistance(drone.location, drone.packages[0].destination) + geolib.getDistance(drone.packages[0].destination, depoCoordinate) : geolib.getDistance(depoCoordinate, drone.location));
     logger.info("Drone distance to depot: " + droneDistanceBackToDepo);
     logger.info("Package destination distance from depo: " + geolib.getDistance(depoCoordinate, package.destination));
     var totalDistanceToCover = droneDistanceBackToDepo + geolib.getDistance(depoCoordinate, package.destination);
-    logger.info("totalDistanceToCover in meter: " + totalDistanceToCover);
+    logger.info("Total Distance To Cover in meter: " + totalDistanceToCover);
     var totalTimeTakenToDeliverThePackage = ((totalDistanceToCover / 1000) / 50) * 3600;
-    logger.info("totalTimeTakenToDeliverThePackage in seconds: " + totalTimeTakenToDeliverThePackage);
+    logger.info("Total Time Taken To Deliver The Package in seconds: " + totalTimeTakenToDeliverThePackage);
     var timeAvailable = package.deadline - (new Date().getTime() / 1000);
-    logger.info("timeAvailable: " + timeAvailable);
+    logger.info("Time Available (deadline - now): " + timeAvailable);
     if (totalTimeTakenToDeliverThePackage < timeAvailable)
     {
         return true;
