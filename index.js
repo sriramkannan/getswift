@@ -84,31 +84,13 @@ Start processing on the given drones and packages
  */
 function processPackages()
 {
-    // check for drone availability
 
-    var availableDrones = [];
-    for (var i = 0; i < drones.length; i++)
-    {
-        if (drones[i].packages == null || drones[i].packages.length == 0)
-        {
-            availableDrones.push(drones[i]);
-        }
-    }
-    if (availableDrones.length == 0)
-    {
-        logger.info("NO DRONES AVAILABLE");
-    }
-    else
-    {
-        logger.info(availableDrones.length + " drones available for delivery");
-        logger.info("Available drones: " + JSON.stringify(availableDrones));
-        sortPackgesByDeadline(packages);
+    sortPackgesByDeadline(packages);
 
-        sortFreeDronesByDistance(drones);
+    sortFreeDronesByDistance(drones);
 
-        assignTheDrone(packages, drones);
-
-    }
+    assignTheDrone(packages, drones);
+    
 }
 
 /**
