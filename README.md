@@ -36,4 +36,4 @@ eg.
 
 ## Test
 
-run the test as "npm test". 
+run the test as "npm test". If it doesn't work, install mocha globally as "npm install -g mocha" and then try test again - "npm test".  
